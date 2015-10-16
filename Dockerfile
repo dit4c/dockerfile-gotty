@@ -6,6 +6,6 @@ RUN VERSION=v0.0.11 && \
 
 RUN ldd /usr/local/bin/gotty
 
-ENTRYPOINT ["/usr/local/bin/gotty","--permit-write"]
-CMD ["/bin/bash"]
+ENTRYPOINT ["/usr/local/bin/gotty"]
+CMD ["--permit-write","--random-url","--reconnect","/bin/bash"]
 EXPOSE 8080
