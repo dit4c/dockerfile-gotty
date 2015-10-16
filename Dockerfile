@@ -1,11 +1,12 @@
-FROM dit4c/centos-notroot:7
+FROM alpine:3.2
 
-RUN VERSION=v0.0.11 && \
-  curl -sLk https://github.com/yudai/gotty/releases/download/$VERSION/linux_amd64.tar.gz \
-    | tar xzC /usr/local/bin
-
-RUN ldd /usr/local/bin/gotty
+RUN apk add --update go git && \
+  mkdir -p /tmp/gotty && \
+  GOPATH=/tmp/gotty go get github.com/yudai/gotty && \
+  mv /tmp/gotty/bin/gotty /usr/local/bin/ && \
+  apk del go git && \
+  rm -rf /tmp/gotty /var/cache/apk/*
 
 ENTRYPOINT ["/usr/local/bin/gotty"]
-CMD ["--permit-write","--reconnect","/bin/bash"]
+CMD ["--permit-write","--reconnect","/bin/sh"]
 EXPOSE 8080
