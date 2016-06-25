@@ -1,4 +1,6 @@
-FROM alpine:3.2
+FROM alpine:3.3
+
+EXPOSE 8080
 
 RUN apk add --update go git && \
   mkdir -p /tmp/gotty && \
@@ -9,4 +11,3 @@ RUN apk add --update go git && \
 
 ENTRYPOINT ["/usr/local/bin/gotty"]
 CMD ["--permit-write","--reconnect","/bin/sh"]
-EXPOSE 8080
